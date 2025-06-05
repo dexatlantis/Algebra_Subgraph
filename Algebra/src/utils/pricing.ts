@@ -4,14 +4,14 @@ import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'
 
-const WMatic_ADDRESS = '0x4200000000000000000000000000000000000006'
-const USDC_WMatic_03_POOL = '0x47e8ca40666102ac217286e51660a4e6e6d7f9a3'
+const WMatic_ADDRESS = '0xe514d9deb7966c8be0ca922de8a064264ea6bcd4'
+const USDC_WMatic_03_POOL = '0xfd91fd468015fdee1870755ece8f5488e17e540a'
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 export let WHITELIST_TOKENS: string[] = [
-  '0x4200000000000000000000000000000000000006', // WMATIC
-  '0xabac6f23fdf1313fc2e9c9244f666157ccd32990', // USDC
+  '0xe514d9deb7966c8be0ca922de8a064264ea6bcd4', // WMATIC
+  '0x0b7007c13325c48911f73a2dad5fa5dcbf808adc', // USDC
   '0x5aefba317baba46eaf98fd6f381d07673bca6467', // USDT 
   '0x49a390a3dfd2d01389f799965f3af5961f87d228'
 ]
@@ -21,7 +21,7 @@ let MINIMUM_Matic_LOCKED = BigDecimal.fromString('0')
 let Q192 = Math.pow(2, 192)
 
 let STABLE_COINS: string[] = [
-  '0x4200000000000000000000000000000000000006', // USDC
+  '0x0b7007c13325c48911f73a2dad5fa5dcbf808adc', // USDC
   '0xabac6f23fdf1313fc2e9c9244f666157ccd32990' // SUDT
 ]
 
@@ -41,7 +41,7 @@ export function priceToTokenPrices(price: BigInt, token0: Token, token1: Token):
 export function getEthPriceInUSD(): BigDecimal {
   let usdcPool = Pool.load(USDC_WMatic_03_POOL) // dai is token0
   if (usdcPool !== null) {
-    return usdcPool.token1Price
+    return usdcPool.token0Price
   } else {
     return ZERO_BD
   }

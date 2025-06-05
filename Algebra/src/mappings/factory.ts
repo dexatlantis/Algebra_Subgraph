@@ -20,7 +20,7 @@ export function handlePoolCreated(event: PoolEvent): void {
     factory.untrackedVolumeUSD = ZERO_BD
     factory.totalFeesUSD = ZERO_BD
     factory.totalFeesMatic = ZERO_BD
-    factory.defaultCommunityFee = ZERO_BI
+    factory.defaultCommunityFee = BigInt.fromI32(450)
     factory.totalValueLockedMatic = ZERO_BD
     factory.totalValueLockedUSD = ZERO_BD
     factory.totalValueLockedUSDUntracked = ZERO_BD

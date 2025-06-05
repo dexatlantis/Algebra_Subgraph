@@ -5,11 +5,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Factory
-    network: sonic-mainnet
+    network: sonic
     source:
       address: '0x3DFB9096c23dcbF69D62aA009D901328d83A340F'
       abi: Factory
-      startBlock: 185138 
+      startBlock: 31827096 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -38,11 +38,11 @@ dataSources:
           handler: handleNewCommunityFee
   - kind: ethereum/contract
     name: NonfungiblePositionManager
-    network: sonic-mainnet
+    network: sonic
     source:
       address: '0x3AfB4D4719C99701C52C5D62129C712848645fD2'
       abi: NonfungiblePositionManager
-      startBlock: 185138 
+      startBlock: 31827096 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -73,7 +73,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: sonic-mainnet
+    network: sonic
     source:
       abi: Pool
     mapping:

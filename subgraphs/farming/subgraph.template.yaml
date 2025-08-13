@@ -17,7 +17,6 @@ dataSources:
       file: ./src/mappings/position-manager.ts
       entities:
         - Deposit
-        - Token
         - Pool
         - Position
         - IncentiveReward
@@ -58,6 +57,10 @@ dataSources:
     abis:
       - name: EternalFarming
         file: ../../abis/EternalFarming.json
+      - name: ERC20SymbolBytes
+        file: ../../abis/ERC20SymbolBytes.json  
+      - name: ERC20NameBytes
+        file: ../../abis/ERC20NameBytes.json
       - name: ERC20
         file: ../../abis/ERC20.json
     eventHandlers:

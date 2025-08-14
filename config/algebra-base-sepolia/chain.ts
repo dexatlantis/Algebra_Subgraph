@@ -26,7 +26,7 @@ export const STABLE_COINS: string[] = [
 
 // Addresses for farming subgraph
 // Farming contracts
-export const ETERNAL_FARMING_ADDRESS = '0x1C5E8C41B5B119dc8fc5ac8e53692E323a6D78D7'  
+export const ETERNAL_FARMING_ADDRESS = '0xf7cA7d0F8Bbef9BBfEB66Cf2c9C84Eeb2dA60b22'  
 
 // Addresses for limit order subgraph
 // Limit order contract

@@ -27,3 +27,10 @@ type Reward @entity(immutable: false){
   amount: BigInt!
   owner: Bytes!
 }
+
+type PositionTransferCache @entity(immutable: false) {
+  # unique identifier for position transfer cache
+  id: ID!
+  # new owner after transfer
+  owner: Bytes!
+}

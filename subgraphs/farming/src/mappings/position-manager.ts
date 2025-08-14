@@ -3,7 +3,7 @@ import {
   DecreaseLiquidity,
   Transfer
 } from '../types/NonfungiblePositionManager/NonfungiblePositionManager'
-import {  Deposit } from '../types/schema'
+import {  Deposit, PositionTransferCache } from '../types/schema'
 import { BigInt} from '@graphprotocol/graph-ts'
 
 export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
@@ -11,7 +11,8 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
 
   if (entity == null) {
     entity = new Deposit(event.params.tokenId.toString());
-    entity.owner = event.transaction.from;
+    let cache = PositionTransferCache.load('1')!
+    entity.owner = cache.owner;
     entity.pool = event.params.pool;
     entity.liquidity = BigInt.fromString("0")
   }
@@ -37,6 +38,13 @@ export function handleTransfer(event: Transfer): void {
   if (entity != null) {
     entity.owner = event.params.to;
     entity.save(); 
+  } else {
+    let transferCache = PositionTransferCache.load('1')
+    if(transferCache == null) {
+      transferCache = new PositionTransferCache('1')
+    }
+    transferCache.owner = event.params.to
+    transferCache.save()
   }
  
 }

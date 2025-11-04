@@ -8,6 +8,7 @@ This repository contains subgraphs for the Algebra Protocol, supporting multi-ne
 - **farming** - Algebra farming protocol events and positions
 - **blocks** - Block data indexing
 - **limits** - Limit order protocol events
+- **alm** - Algebra Liquidity Management (ALM) vaults
 
 ## Quick Start
 
@@ -68,6 +69,10 @@ export const ETERNAL_FARMING_ADDRESS = '0x00000000000000000000000000000000000000
 // Addresses for limit order subgraph
 // Limit order contract
 export const LIMIT_ORDER_ADDRESS = '0x822ddb9EECc3794790B8316585FebA5b8F7C7507'
+
+// Addresses for ALM subgraph
+// ALM Vault Factory contract
+export const ALM_VAULT_FACTORY_ADDRESS = '0xAb87BB2cd5a370b685313daf699FA168EE74099D'
 ```
 
 ### 3. Prepare Network Configuration

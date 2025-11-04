@@ -1,0 +1,66 @@
+specVersion: 1.2.0
+description: Algebra ALM Vaults on {{NETWORK_NAME}}.
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: AlmVaultFactory
+    network: {{NETWORK}}
+    source:
+      address: '{{ALM_VAULT_FACTORY_ADDRESS}}'
+      abi: AlmVaultFactory
+      startBlock: {{START_BLOCK}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault-factory.ts
+      entities:
+        - AlmVault
+      abis:
+        - name: AlmVaultFactory
+          file: ../../abis/AlmVaultFactory.json
+        - name: ERC20
+          file: ../../abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ../../abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ../../abis/ERC20NameBytes.json
+        - name: AlmVault
+          file: ../../abis/AlmVault.json
+      eventHandlers:
+        - event: AlgebraVaultCreated(indexed address,address,address,bool,address,bool,uint256)
+          handler: handleVaultCreated
+templates:
+  - kind: ethereum/contract          
+    name: AlmVault
+    network: {{NETWORK}}
+    source:
+      abi: AlmVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault.ts
+      entities:
+        - AlmVault
+      abis:
+        - name: AlmVault
+          file: ../../abis/AlmVault.json
+        - name: Pool
+          file: ../../abis/pool.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Deposit(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleWithdraw
+        - event: Rebalance(int24,uint256,uint256,uint256,uint256,uint256)
+          handler: handleRebalance
+        - event: CollectFees(indexed address,uint256,uint256)
+          handler: handleCollectFees
+        - event: FarmingContract(indexed address,address)
+          handler: handleFarmingContract

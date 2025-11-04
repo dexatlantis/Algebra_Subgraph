@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..');
 
-const AVAILABLE_SUBGRAPHS = ['analytics', 'farming', 'blocks', 'limits'];
+const AVAILABLE_SUBGRAPHS = ['analytics', 'farming', 'blocks', 'limits', 'alm'];
 
 function getAvailableNetworks(): string[] {
   const configDir = join(__dirname, '..', 'config');

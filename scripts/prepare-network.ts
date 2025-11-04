@@ -126,6 +126,7 @@ function extractConfigFromChainFile(chainFilePath: string): {
   nonfungiblePositionManagerAddress: string;
   eternalFarmingAddress?: string;
   limitOrderAddress?: string;
+  almVaultFactoryAddress?: string;
 } {
   try {
     const chainContent = fs.readFileSync(chainFilePath, 'utf8');
@@ -146,6 +147,10 @@ function extractConfigFromChainFile(chainFilePath: string): {
     const limitOrderMatch = chainContent.match(/export const LIMIT_ORDER_ADDRESS = '([^']+)'/);
     const limitOrderAddress = limitOrderMatch ? limitOrderMatch[1] : undefined;
     
+    // Extract ALM vault factory address (optional)
+    const almVaultFactoryMatch = chainContent.match(/export const ALM_VAULT_FACTORY_ADDRESS = '([^']+)'/);
+    const almVaultFactoryAddress = almVaultFactoryMatch ? almVaultFactoryMatch[1] : undefined;
+    
     if (!factoryAddress || !nonfungiblePositionManagerAddress) {
       throw new Error('Could not extract required addresses from chain.ts');
     }
@@ -154,7 +159,8 @@ function extractConfigFromChainFile(chainFilePath: string): {
       factoryAddress, 
       nonfungiblePositionManagerAddress,
       eternalFarmingAddress,
-      limitOrderAddress
+      limitOrderAddress,
+      almVaultFactoryAddress
     };
   } catch (error) {
     throw new Error(`Failed to parse chain.ts: ${(error as Error).message}`);
@@ -221,6 +227,11 @@ function processSubgraphTemplate(
       subgraphContent = subgraphContent.replace(/{{LIMIT_ORDER_ADDRESS}}/g, addresses.limitOrderAddress);
     }
     
+    // Replace ALM vault factory placeholders
+    if (addresses.almVaultFactoryAddress) {
+      subgraphContent = subgraphContent.replace(/{{ALM_VAULT_FACTORY_ADDRESS}}/g, addresses.almVaultFactoryAddress);
+    }
+    
     fs.writeFileSync(outputPath, subgraphContent);
     console.log(`✅ Generated ${subgraphName}/subgraph.yaml from template`);
     if (needsChainFile) {
@@ -242,7 +253,7 @@ try {
   }
   
   // Process each subgraph
-  const subgraphs = ['analytics', 'farming', 'blocks', 'limits'];
+  const subgraphs = ['analytics', 'farming', 'blocks', 'limits', 'alm'];
   let processedCount = 0;
   
   for (const subgraphName of subgraphs) {
@@ -275,3 +286,4 @@ console.log(`  cd subgraphs/analytics && yarn codegen && yarn build    # Build a
 console.log(`  cd subgraphs/farming && yarn codegen && yarn build # Build farming subgraph (if configured)`);
 console.log(`  cd subgraphs/blocks && yarn codegen && yarn build  # Build blocks subgraph (if configured)`);
 console.log(`  cd subgraphs/limits && yarn codegen && yarn build  # Build limits subgraph (if configured)`);
+console.log(`  cd subgraphs/alm && yarn codegen && yarn build     # Build alm subgraph (if configured)`);
